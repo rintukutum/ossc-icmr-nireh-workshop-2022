@@ -7,10 +7,15 @@
 
 - Resource Person/Tutor:
 Rintu Kutum, PhD
+
 Faculty Fellow, Department of Computer Science
+
 Data Scientist
+
 Mphasis Lab of Computational Thinking & Machine Learning
+
 Trivedi School of Biosciences
+
 Ashoka University
 
 
