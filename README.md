@@ -1,4 +1,5 @@
-# ICMR-NIREH Workshop on Open Source Scientific Computing for Environmental Health Science
+# ICMR-NIREH Workshop 2022
+## Open Source Scientific Computing for Environmental Health Science
 
 - Venue: ICMR-NIREH
 - Organisers: 
