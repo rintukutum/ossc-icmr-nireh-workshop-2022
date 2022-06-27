@@ -1,3 +1,6 @@
+#' URL
+#' http://www.bio.ic.ac.uk/research/mjcraw/therbook/index.htm
+
 #' Getting help in R
 #' The simplest way to get help in R is to click on the 
 #' Help button on the toolbar of the RGui window 
