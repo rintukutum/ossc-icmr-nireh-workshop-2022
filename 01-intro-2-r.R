@@ -402,7 +402,40 @@ boxplot(dat)
 #' ------------
 #' Matrices and arrays
 #' ------------
-#' 
+# Matrices and arrays
+y <- 1:24
+dim(y) <- c(2,4,3)
+
+
+# Matrices
+X <- matrix(c(1,0,0,0,1,0,0,0,1),nrow=3)
+
+# Naming the rows and columns of matrices
+
+rownames(X) <- rownames(X,do.NULL=FALSE,prefix="Trial.")
+
+drug.names <- c("aspirin", "paracetamol", "nurofen", "hedex", "placebo")
+
+colnames(X) <- drug.names
+
+dimnames(X) <- list(NULL,paste("drug.",1:5,sep=""))
+
+# Calculations on rows or columns of the matrix
+mean(X[,5])
+
+mean(X[2,])
+
+# Adding rows and columns to the matrix
+
+X <- rbind(X,apply(X,2,mean))
+X <- cbind(X,apply(X,1,var))
+
+colnames(X) <- c(1:5,"variance")
+rownames(X) <- c(1:4,"mean")
+
+
+
+
 #' 
 #' ------------
 #' Sampling
