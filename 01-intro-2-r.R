@@ -25,6 +25,17 @@ read.table(file = 'data/therbook/aplam.txt')
 read.table(file = 'data/therbook/aplam.txt',header = TRUE)
 
 
+#------ EXTRA
+# install.packages("readxl")
+
+library(readxl)
+
+my_xls <- read_excel(path = 'data/demo.xlsx')
+
+my_xls_s1 <- read_excel(path = 'data/demo.xlsx',sheet = "Sheet1")
+my_xls_s2 <- read_excel(path = 'data/demo.xlsx',sheet = "rintu")
+
+
 
 #' Demonstrations of R functions
 #' These can be useful for seeing the range of things that 
@@ -166,7 +177,6 @@ log10(6)
 #' 
 #' 3. Variable names should not contain blank spaces (use back.pay not back pay).
 
-
 #' Integers
 
 x <- c(5,3,7,8)
@@ -187,10 +197,11 @@ is.integer(x_integer)
 #' number of levels. A simple example of a factor might 
 #' be a variable called gender with 
 #' two levels: ‘female’ and ‘male’.
-gender <- factor(c("female", "male", "female", "male", "female"))
+gender <- factor(c("male","female", "male", "female", "male", "female"))
 class(gender)
 mode(gender)
-
+as.numeric(factor(c("male","female", "male", "female", "male", "female"),
+       levels = c('female','male')))
 
 #' ------------
 #' Logical operations
@@ -208,7 +219,7 @@ mode(gender)
 #' --------
 #' TRUE and T with FALSE and F
 
-TRUE == FALSE
+TRUE == TRUE
 
 T == F
 
@@ -222,9 +233,9 @@ x <- 0:6
 
 x < 4
 
-all(x>0)
+all(x>-1)
 
-any(x<0)
+any(x<1)
 
 #' x <- y   x is assigned the value of y (x gets the values of y);
 #' x = y    in a function or a list x is set to y unless you specify otherwise; 
@@ -236,12 +247,15 @@ y1 <- 4
 x1 <- y1
 
 
-x1 <- 2
-y1 <- 4
+x1 <- 1
+y1 <- 8
 
-x1 = y1
+x1 = y1 # avoid using this
 
-x1 == y
+x1 == y1
+
+x1 != 9
+
 
 
 #' ------------
@@ -254,28 +268,137 @@ x1 == y
 
 #' To generate a sequence in steps other than 1, you 
 #' use the seq function. 
-seq(from = 0, to = 1.5, by = 0.1)
+seq(from = 0, to = 10, by = 2)
 
 
-seq(from = 6, to = 4, by = -0.2)
+seq(from = 16, to = 4, by = -5)
 
 #' Generating repeats
-rep(9,5)
+rep(x = 9,times=5)
 
 
 #' ------------
 #' Missing values and things that are not numbers
 #' ------------
-#' 
-#' 
+#' Missing values, infinity and things that are not numbers
+# Calculations can lead to answers that are plus 
+# infinity, represented in R by Inf, or minus 
+# infinity, which is represented as -Inf:
+
+3/0
+# [1] Inf
+-12/0
+# [1] -Inf
+
+# Calculations involving infinity can be 
+# evaluated: for instance,
+exp(-Inf)
+
+# [1] 0
+
+# Other calculations, however, lead to 
+# quantities that are not numbers. These 
+# are represented in R by NaN (‘not
+# a number’). Here are some of the classic cases:
+
+0/0
+
+is.finite(10)
+
+#' Missing values: NA
+y <- c(4,NA,7)
+
+#'  treating NA as if it was a piece of 
+#'  text and using double equals (==) 
+#'  to test for it. So this does not work:
+y == NA
+y == "NA"
+
+is.na(y)
+
+#' To produce a vector with the NA 
+#' stripped out, use subscripts with 
+#' the not ! operator like this:
+y[! is.na(y)]
+
+y1 <- c(1,2,3,NA)
+y2 <- c(5,6,NA,8)
+y3 <- c(9,NA,11,12)
+y4 <- c(NA,14,15,16)
+
+full.frame <- data.frame(y1,y2,y3,y4)
+
+reduced.frame <- full.frame[!is.na(full.frame$y1),]
+
+#' Some functions do not work with their default 
+#' settings when there are missing values in 
+#' the data, and mean is a classic example of this:
+
+x <- c(1:8,NA)
+
+mean(x)
+# [1] NA
+
+#' In order to calculate the mean of the 
+#' non-missing values, you need to specify 
+#' that the NA are to be removed,
+#' using the na.rm=TRUE argument:
+mean(x, na.rm=TRUE)
+
+vmv <- c(1:6,NA,NA,9:12)
+
+#' If the missing values are genuine
+#' counts of zero, you might want to 
+#' edit the NA to 0. Use the is.na 
+#' function to generate subscripts for this:
+vmv[is.na(vmv)] <- 0
+
 #' ------------
 #' Vectors and subscripts
 #' ------------
+# subsetting
+counts <- c(25,12,7,4,6,2,1,0,2)
+counts[5]
+
+counts[c(1,5)]
+
+counts[-7]
+
+# Naming elements within vectors
+names(counts) <- 0:8
+
+y <- c(8,3,5,7,6,6,8,9,2,3,9,4,10,4,11)
+
+sort(y)
+
+rev(sort(y))
+
+rev(sort(y))[1:3]
+
+x <- c(2,3,4,1,5,8,2,3,7,5,7)
+
+which(x == max(x))
+
+which.max(x)
+
+which(x == min(x))
+
+which.min(x)
+
+
+#' Vector functions
 #' 
+y <- c(8,3,5,7,6,6,8,9,2,3,9,4,10,4,11)
+mean(y)
 #' ------------
 #' Vectorized functions
 #' ------------
-#' 
+dat <-read.table("data/therbook/yields.txt",
+                 header = TRUE)
+apply(dat,2,min)
+apply(dat,2,max)
+
+boxplot(dat)
 #' ------------
 #' Matrices and arrays
 #' ------------
