@@ -357,12 +357,28 @@ vmv[is.na(vmv)] <- 0
 #' Vectors and subscripts
 #' ------------
 # subsetting
+#' additional demo
+demo_var <- sample(x = 1:10,size = 10,replace = TRUE)
+#'------ demo starts
+seq1 <- 'ATGCGCGA'
+seq2 <- 'ATGCGCAA'
+
+seq1_vec <- strsplit(seq1,split = '')[[1]]
+seq2_vec <- strsplit(seq2,split = '')[[1]]
+seq1_vec == seq2_vec
+seq1_vec != seq2_vec
+which(seq1_vec != seq2_vec)
+idx_variant <- which(seq1_vec != seq2_vec)
+seq1_vec[idx_variant]
+seq2_vec[idx_variant]
+#'------ demo ends
 counts <- c(25,12,7,4,6,2,1,0,2)
-counts[5]
 
-counts[c(1,5)]
+counts[5] # index no. 5 to extract the value
 
-counts[-7]
+counts[c(1,5)] # index no. 1 and 5 to extract many values
+
+counts[-7] # remove 7th element and print the rest
 
 # Naming elements within vectors
 names(counts) <- 0:8
