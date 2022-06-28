@@ -383,72 +383,82 @@ counts[-7] # remove 7th element and print the rest
 # Naming elements within vectors
 names(counts) <- 0:8
 
-y <- c(8,3,5,7,6,6,8,9,2,3,9,4,10,4,11)
+
+set.seed(35) # homework
+y <- sample(x = 0:10,size = 20,replace = TRUE)
 
 sort(y)
-
+sort(y,decreasing = TRUE)
 rev(sort(y))
 
 rev(sort(y))[1:3]
 
-x <- c(2,3,4,1,5,8,2,3,7,5,7)
+rev(counts) 
+#------ which for position and max min
+set.seed(56)
+x <- sample(
+  x = c(2,8,4,6,1), size = 100, replace = TRUE
+)
 
 which(x == max(x))
-
 which.max(x)
 
 which(x == min(x))
-
 which.min(x)
 
 
 #' Vector functions
 #' 
-y <- c(8,3,5,7,6,6,8,9,2,3,9,4,10,4,11)
 mean(y)
 #' ------------
 #' Vectorized functions
 #' ------------
-dat <-read.table("data/therbook/yields.txt",
-                 header = TRUE)
-apply(dat,2,min)
-apply(dat,2,max)
+rm(list=ls())
+dat <- read.table(
+  file = "data/therbook/yields.txt",
+  header = TRUE
+)
 
-boxplot(dat)
+
+apply(X = dat, MARGIN = 1, FUN = min)
+apply(X = dat, MARGIN = 2, FUN = max)
+
+my_col <- RColorBrewer::brewer.pal(
+  n = 3,name = 'Set2'
+  )
+boxplot(dat,col = my_col)
+
+#' about beanplot
+#' https://arc.lib.montana.edu/book/statistics-with-r-textbook/item/43
+#' https://cran.r-project.org/web/packages/beanplot/index.html
+#' https://cran.r-project.org/web/packages/beanplot/vignettes/beanplot.pdf
+#' install.packages('beanplot')
+#' library(beanplot)
 #' ------------
 #' Matrices and arrays
 #' ------------
-# Matrices and arrays
+# Arrays
 y <- 1:24
 dim(y) <- c(2,4,3)
 
 
 # Matrices
-X <- matrix(c(1,0,0,0,1,0,0,0,1),nrow=3)
-
+X <- matrix(
+  data = c(1,0,0,0,1,0,0,0,1),nrow=3
+)
 # Naming the rows and columns of matrices
-
-rownames(X) <- rownames(X,do.NULL=FALSE,prefix="Trial.")
-
-drug.names <- c("aspirin", "paracetamol", "nurofen", "hedex", "placebo")
-
+rownames(X) <- rownames(
+  X,do.NULL=FALSE,prefix="Trial."
+)
+drug.names <- c("asp", "para", "nur")
 colnames(X) <- drug.names
 
-dimnames(X) <- list(NULL,paste("drug.",1:5,sep=""))
+
+install.packages('beanplot')
 
 # Calculations on rows or columns of the matrix
-mean(X[,5])
-
-mean(X[2,])
 
 # Adding rows and columns to the matrix
-
-X <- rbind(X,apply(X,2,mean))
-X <- cbind(X,apply(X,1,var))
-
-colnames(X) <- c(1:5,"variance")
-rownames(X) <- c(1:4,"mean")
-
 
 
 
@@ -494,4 +504,16 @@ rownames(X) <- c(1:4,"mean")
 #' 
 #' 
 
+dat <- read.csv("data/therbook/piedata.csv")
+pie(dat$amounts,labels=as.character(dat$names))
 
+
+#' Classical Tests
+# book code
+?shapiro.test
+?t.test
+?wilcox.test
+
+dat <- read.table(file = 'data/therbook/regression.txt',header = TRUE)
+
+mod_lm <- lm(growth~tannin,data = dat)
